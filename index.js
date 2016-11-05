@@ -176,7 +176,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 					geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
 						//console.log(res);
 						var datetime = Date.parse(exifData.exif.DateTimeOriginal);
-						Event.findOne({location.textual : res[0].formattedAddress}, function(err, result){
+						Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
 							if(datetime.toDateString() == result.datetime.toDateString()){
 								
 							}
