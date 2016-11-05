@@ -223,16 +223,16 @@ app.get('/uploads/:image', function(req, res){
 	res.sendFile(__dirname + "/assets/uploads" + req.params.image);
 });
 app.get('/image/:img', function(req, res){
-	File.findOne({name: req.params.img}, function (err, image) {
+	File.findOne({name: req.params.img}, function (err, img) {
 		if (err) {
 			done(err);
 			return;
 		}
-		if (!image) {
+		if (!img) {
 			done(null, false, { message: 'No such image.' });
 			return;
 		}
-		res.data.image = image
+		res.data.image = img;
 	});
 	res.render('image', res.data);
 });
