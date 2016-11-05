@@ -2,20 +2,22 @@ var express = require("express");
 var app = express();
 
 var expresshbs = require("express-handlebars");
+var flash = require("connect-flash");
 var bodyParser = require("body-parser");
-var mysql = require("mysql");
+var mongoose = require("mongoose");
 
-var connection = mysql.createConnection({
-	host : "localhost",
-	user : "orcas",
-	password : "",
-	database : "KonnectiDB"
-});
+var models = require("./models")(mongoose);
 
-connection.connect();
+var User = models.User;
+var Person = models.Person;
+var File = models.File;
+
+mongoose.connect('mongodb://localhost/orcas');
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+
+app.use(flash());
 
 app.engine('handlebars', expresshbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
@@ -27,9 +29,18 @@ app.post('/', function(req, res){
 	if(!req.body){
 
 	}
-	connection.query(util.format("SELECT * FROM Users WHERE username=%s", req.body.username), function(err, rows, fields){
-		if(err) return console.error(err);
-		console.log(rows);
+	User.findOne({username : req.body.username}, function(err, user){
+		if(err || !user){
+			
+		}
+		if(user.password == req.body.password){
+			res.data = {username : user.username, password : user.password};
+			res.render('/home', res.data);
+		}
 	});
+	res.flash('error', "Error logging in");
+	res.render('/', {{errors : res.flash('error')}}
 });
-app.listen(10201);
+app.listen(10201, function(){
+	console.log("Listening");	
+});
