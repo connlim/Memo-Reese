@@ -234,8 +234,9 @@ app.get('/image/:img', function(req, res){
 		}
 		console.log(img);
 		res.data.image = img;
+		res.render('image', res.data);
 	});
-	res.render('image', res.data);
+	res.redirect('/');
 });
 app.listen(10201, function(){
 	console.log("Listening");
