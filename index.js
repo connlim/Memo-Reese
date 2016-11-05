@@ -29,6 +29,11 @@ app.use(bodyParser.json());
 app.engine('handlebars', expresshbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
 
+app.use(function(req, res, next){
+	res.data = {};
+	next();
+});
+
 app.get('/', function(req, res){
 	res.render('login');
 });
@@ -50,6 +55,20 @@ app.post('/', function(req, res){
 		//res.render('login', {errors : "Error logging in"});
 	}
 	
+});
+app.get('/create', function(req, res){
+	res.render('create');
+});
+app.post('/create', function(req, res){
+	if(req.body.password == req.body.confirmpassword){
+		var user = new User({
+			username : req.body.username,
+			password : req.body.password,
+			description : ""
+		});
+		user.save();
+		res.redirect('login');
+	}
 });
 app.listen(10201, function(){
 	console.log("Listening");	
