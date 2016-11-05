@@ -121,7 +121,6 @@ app.post('/register', function(req, res){
 			description : ""
 		});
 		user.save();
-		console.log(user);
 		res.redirect('/');
 	}else{
 		req.flash("error", "Passwords do not match!");
@@ -135,8 +134,9 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
-		url : "/uploads/" + req.file.filename,
-		uploader : req.user.username
+		uploader : req.user.username,
+		url : "/uploads/" + req.file.filename
+		
 	});
 	//req.user.files.push(newfile);
 	//req.user.save();

@@ -15,7 +15,8 @@ module.exports = function(mongoose){
 	var File = mongoose.model("File", {
 		tags : [String],
 		type : String,
-		url : String
+		url : String,
+		uploader : String
 	});
 	
 	//[{ type: Schema.Types.ObjectId, ref: "User" }]
