@@ -56,7 +56,7 @@ app.get('/create', function(req, res){
 	res.render('create');
 });
 app.post('/create', function(req, res){
-	if(req.body.password == req.body.confirmpassword){
+	if(req.body.password == req.body.passwordconfirm){
 		var user = new User({
 			username : req.body.username,
 			password : req.body.password,
