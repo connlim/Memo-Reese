@@ -10,4 +10,4 @@ deploy:
 		- eval $(ssh-agent -s)
 		- ssh-add <(echo "$GITLAB_DEPLOY_KEY")
 		- mkdir -p ~/.ssh
-		- ssh orcas@makerforce.io "cd Memoreese && git pull"
+		- ssh orcas@makerforce.io "touch Iwashere"

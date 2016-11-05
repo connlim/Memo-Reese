@@ -4,6 +4,7 @@ var app = express();
 var expresshbs = require("express-handlebars");
 var flash = require("connect-flash");
 var bodyParser = require("body-parser");
+var cookieParser = require('cookie-parser')
 var mongoose = require("mongoose");
 
 var models = require("./models")(mongoose);
@@ -17,8 +18,8 @@ mongoose.connect('mongodb://localhost/orcas');
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-app.use(express.cookieParser('keyboard cat'));
-  app.use(express.session({ cookie: { maxAge: 60000 }}));
+app.use(cookieParser('keyboard cat'));
+app.use(express.session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
 app.engine('handlebars', expresshbs({defaultLayout : 'main'}));
