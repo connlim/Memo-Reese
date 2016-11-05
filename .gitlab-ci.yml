@@ -1,6 +1,13 @@
-image: node:6.9.1
+image: node:latest
 
 all_tests:
-  script:
-   - npm install
-   - node index.js
+	script:
+		- npm install
+   
+deploy:
+	stage:deploy
+	script:
+		- eval $(ssh-agent -s)
+		- ssh-add <(echo "$GITLAB_DEPLOY_KEY")
+		- mkdir -p ~/.ssh
+		- ssh orcas@makerforce.io "cd Memoreese && git pull"
