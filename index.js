@@ -1,10 +1,12 @@
 var express = require("express");
 var app = express();
+var fs = require("fs");
 
 var expresshbs = require("express-handlebars");
 var flash = require("connect-flash");
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
+var exifParser = require('exif-parser')
 
 var shortid = require("shortid");
 var multer = require("multer");
@@ -137,6 +139,18 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 	req.user.files.push(newfile);
 	req.user.save();
 	newfile.save();
+	fs.open(newfile.url, 'r', function(status, fd) {
+    if (status) {
+      console.log(status.message);
+      return;
+    }
+    var buffer = new Buffer(65535);
+    fs.read(fd, buffer, 0, 65535, 0, function(err, num) {
+			var parser = exifParser.create(buffer);
+			parser.enableTagNames(true);
+			var result = parser.parse();
+  });
+});
 	res.redirect('/');
 });
 app.get('/search', function(req, res){
@@ -155,5 +169,5 @@ app.get('/search', function(req, res){
 	res.render('home', res.data);
 });
 app.listen(10201, function(){
-	console.log("Listening");	
+	console.log("Listening");
 });
