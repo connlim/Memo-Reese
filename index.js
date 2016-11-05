@@ -179,16 +179,22 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 						Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
 							if(!result){
 								var newEvent = new Event({
-										name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
-										location : {
-											textual : res[0].formattedAddress,
-											lat : lat,
-											lng : lng
-										},
-										datetime : exifData.exif.DateTimeOriginal
-									});
-									console.log(newEvent);
-									newEvent.save();
+									name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
+									location : {
+										textual : res[0].formattedAddress,
+										lat : lat,
+										lng : lng
+									},
+									datetime : exifData.exif.DateTimeOriginal
+								});
+								console.log(newEvent);
+								newEvent.save(function(err) {
+									if(err){
+										console.log(err);
+										throw err;
+									}
+									console.log("Event saved")
+								});
 								
 							}
 						});
