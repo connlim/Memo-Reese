@@ -1,0 +1,6 @@
+image: node:6.9.1
+
+all_tests:
+  script:
+   - npm install
+   - node index.js
