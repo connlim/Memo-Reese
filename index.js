@@ -39,7 +39,7 @@ app.post('/', function(req, res){
 		}
 	});
 	res.flash('error', "Error logging in");
-	res.render('/', {{errors : res.flash('error')}}
+	res.render('/', {errors : res.flash('error')});
 });
 app.listen(10201, function(){
 	console.log("Listening");	
