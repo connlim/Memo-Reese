@@ -65,6 +65,7 @@ app.post('/create', function(req, res){
 			description : ""
 		});
 		user.save();
+		console.log(user);
 		res.redirect('/');
 	}
 });
