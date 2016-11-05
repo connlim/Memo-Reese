@@ -92,12 +92,12 @@ app.use(function(req, res, next){
 
 app.get('/', function(req, res){
 	if(req.user){
-		res.data.imgs = req.user.files;
-		console.log(res.data.imgs);
-		/*for(var i = 0; i < req.user.files.length; i++){
-			res.data.imgs.push({url : req.user.files[i].url, type : req.user.files[i].type, tags: req.user.files[i].tags});
-		}*/
-		res.render('home', res.data);
+		File.find({uploader : req.user.username}, function(err, files){
+			res.data.imgs = files;
+			console.log(res.data.imgs);
+			res.render('home', res.data);
+		});
+		
 	}else{
 		res.render('login');
 	}
@@ -135,22 +135,23 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
-		url : "/uploads/" + req.file.filename
+		url : "/uploads/" + req.file.filename,
+		uploader : req.user.username
 	});
 	req.user.files.push(newfile);
 	req.user.save();
 	newfile.save();
 	fs.open(newfile.url, 'r', function(status, fd) {
-    if (status) {
-      console.log(status.message);
-      return;
-    }
-    var buffer = new Buffer(65535);
-    fs.read(fd, buffer, 0, 65535, 0, function(err, num) {
-			var parser = exifParser.create(buffer);
-			parser.enableTagNames(true);
-			var result = parser.parse();
-  	});
+		if (status) {
+		  console.log(status.message);
+		  return;
+		}
+		var buffer = new Buffer(65535);
+		fs.read(fd, buffer, 0, 65535, 0, function(err, num) {
+				var parser = exifParser.create(buffer);
+				parser.enableTagNames(true);
+				var result = parser.parse();
+		});
 	});
 	res.redirect('/');
 });
