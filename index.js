@@ -132,7 +132,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
-		url : req.file.path
+		url : "/uploads/" + req.file.filename
 	});
 	req.user.files.push(newfile);
 	req.user.save();
@@ -153,6 +153,9 @@ app.get('/search', function(req, res){
 		}
 	});
 	res.render('home', res.data);
+});
+app.get('/uploads/:image', function(req, res){
+	res.sendFile(__dirname + "/assets/uploads" + req.params.image);
 });
 app.listen(10201, function(){
 	console.log("Listening");	
