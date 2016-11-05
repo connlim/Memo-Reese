@@ -34,15 +34,17 @@ app.post('/', function(req, res){
 			res.send(user);
 			if(err || !user){
 				
-			}
-			console.log(user);
-			if(user.password == req.body.password){
-				res.data = {username : user.username, password : user.password};
-				res.render('home', res.data);
+			}else{
+				console.log(user);
+				if(user.password == req.body.password){
+					res.data = {username : user.username, password : user.password};
+					res.render('home', res.data);
 				}
+			}
+			
 		});
 		//req.flash('error', "Error logging in");
-		res.render('login', {errors : "Error logging in"});
+		//res.render('login', {errors : "Error logging in"});
 	}
 	
 });

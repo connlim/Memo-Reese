@@ -16,7 +16,7 @@ module.exports = function(mongoose){
 		
 	});
 	
-	[{ type: Schema.Types.ObjectId, ref: "User" }]
+	//[{ type: Schema.Types.ObjectId, ref: "User" }]
 	
 	return {
 		User : User,
