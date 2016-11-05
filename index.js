@@ -95,7 +95,7 @@ app.get('/', function(req, res){
 	if(req.user){
 		File.find({uploader : req.user.username}, function(err, files){
 			res.data.imgs = files;
-			console.log(res.data.imgs);
+			//console.log(res.data.imgs);
 			res.render('home', res.data);
 		});
 
@@ -131,7 +131,7 @@ app.get('/upload', function(req, res){
 	res.render('upload');
 });
 app.post('/upload', upload.single('uploader'), function(req, res){
-	console.log(req.user.username);
+	//console.log(req.user.username);
 	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
