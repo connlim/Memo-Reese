@@ -23,24 +23,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Memo Reese</a>
+          <a class="navbar-brand" href="/">Memo Reese</a>
         </div>
 		{{#if user}}
-        <div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left">
+				<li class="active"><a href="/">Home</a></li>
 				<li><a href="/upload">Upload</a></li>
-				<li><a href="#contact">Contact</a></li>
-				<form class="navbar-form navbar-left" action="/search" method="get">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search" name="searchterm">
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				</form>
-				<li><a href="/logout">Logout</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+				<li><a href="/contact">Contact</a></li>
+				<li>
+					<form class="navbar-form" action="/search" method="get">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search" name="searchterm">
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<!-- <li><a href="/logout">Logout</a></li> -->
+				<li>
+					<p class="navbar-btn">
+						<a href="/logout" class="btn btn-default">Logout</a>
+					</p>
+				</li>
+			</ul>
+		</div><!--/.nav-collapse -->
 	  {{/if}}
     </nav>
 
