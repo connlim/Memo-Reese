@@ -187,6 +187,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 										},
 										datetime : datetime
 									});
+									console.log(newEvent);
 									newEvent.save();
 								
 							}
