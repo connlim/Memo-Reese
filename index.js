@@ -141,9 +141,9 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 	req.user.files.push(newfile);
 	req.user.save();
 	newfile.save();
-	fs.open(newfile.url, 'r', function(status, fd) {
+	/*fs.open(newfile.url, 'r', function(status, fd) {
 		if (status) {
-		  console.log(status.message);
+		  //console.log(status.message);
 		  return;
 		}
 		var buffer = new Buffer(65535);
@@ -152,7 +152,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 				parser.enableTagNames(true);
 				var result = parser.parse();
 		});
-	});
+	});*/
 	res.redirect('/');
 });
 app.get('/search', function(req, res){
