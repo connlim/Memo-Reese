@@ -1,0 +1,23 @@
+{{#if errors}}
+	{{errors}}
+{{/if}}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 col-md-offset-1 form-wrapper">
+      <form action="/upload" method="post">
+				<input type="file" name="uploader"
+    			<div class="login-label">
+    				<span> Tags </span>
+    			</div>
+    			<div class="login-input">
+    				<input type="text" class="form-control" name="tags"/>
+    			</div>
+    			<div class="clearfix"></div>
+				<div class="submitBox">
+    				<input class="btn btn-primary" type="submit" name="login" value="Upload!" />
+    			</div>
+	   </form>
+    </div>
+  </div>
+</div>
