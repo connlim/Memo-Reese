@@ -4,7 +4,24 @@ var app = express();
 var expresshbs = require("express-handlebars");
 var flash = require("connect-flash");
 var bodyParser = require("body-parser");
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+
+var shortid = require("shortid");
+var multer = require("multer");
+var storage = multer.diskStorage({
+	destination : function(req, file, cb){
+		cb(null, __dirname + "/assets/uploads");
+	},
+	filename : function(req, file, cb){
+		cb(null, shortid.generate());
+	}
+});
+
+var session = require("express-session");
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+var passport-secret = "orcinus orca";
+
 var mongoose = require("mongoose");
 
 mongoose.connect('mongodb://orcas:0c53d8885099@localhost/orcas');
@@ -15,49 +32,80 @@ var User = models.User;
 var Person = models.Person;
 var File = models.File;
 
+app.use(express.static(__dirname + '/assets'));
 
+app.use(cookieParser());
+app.use(app.session = session({
+	secret : passport-secret,
+	store : new MongoStore({
+		mongooseConnection: mongoose.connection
+	})
+}));
+app.use(passport.intialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(function (username, password, done) {
+	User.findOne({username: username}, function (err, user) {
+		if (err) {
+			done(err);
+			return;
+		}
+		if (!user) {
+			done(null, false, { message: 'No such user.' });
+			return;
+		}
+		if(password == user.password){
+			done(null, user);
+		}else{
+			done(null, false, { message: 'Incorrect password.' });
+		}
+	});
+}));
+passport.serializeUser(function (user, done){
+	done(null, user.id);
+});
+passport.deserialiseUser(function(id, done) {
+	User.findOne({_id : id}, function(err, user){
+		if(user){
+			done(null, user);
+		}
+	})
+});
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
-
-//app.use(cookieParser('keyboard cat'));
-//app.use(express.session({ cookie: { maxAge: 60000 }}));
-//app.use(flash());
 
 app.engine('handlebars', expresshbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(function(req, res, next){
-	res.data = {};
+	res.data = {user : req.user};
 	next();
 });
 
 app.get('/', function(req, res){
-	res.render('login');
-});
-app.post('/', function(req, res){
-	if(req.body){
-		User.findOne({username : "test"}).exec(function(err, user){
-			if(err || !user){
-				
-			}else{
-				console.log(user);
-				if(user.password == req.body.password){
-					res.data = {username : user.username, password : user.password};
-					res.render('home', res.data);
-				}
-			}
-			
-		});
-		//req.flash('error', "Error logging in");
-		//res.render('login', {errors : "Error logging in"});
+	if(req.user){
+		res.data.imgs = [];
+		for(var i = 0; i < user.files.length; i++){
+			res.data.imgs.push(user.files[i].url);
+		}
+		res.render('home', res.data);
+	}else{
+		res.render('login');
 	}
-	
 });
-app.get('/create', function(req, res){
-	res.render('create');
+
+app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login', failureFlash: true}));
+
+app.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
 });
-app.post('/create', function(req, res){
+
+app.get('/register', function(req, res){
+	res.render('register');
+});
+app.post('/register', function(req, res){
 	if(req.body.password == req.body.passwordconfirm){
 		var user = new User({
 			username : req.body.username,
@@ -68,6 +116,16 @@ app.post('/create', function(req, res){
 		console.log(user);
 		res.redirect('/');
 	}
+});
+app.post('/imageupload', upload.single('uploader'), function(req, res){
+	var newfile = new File({
+		tags : req.body.tags.split(" "),
+		type : req.file.mimetype,
+		url : req.file.path
+	});
+	user.files.push(newfile);
+	user.save();
+	newfile.save();
 });
 app.listen(10201, function(){
 	console.log("Listening");	

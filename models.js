@@ -5,7 +5,7 @@ module.exports = function(mongoose){
 		username : String,
 		description : String, 
 		password : String,
-		
+		files : [{ type: Schema.Types.ObjectId, ref: "File" }],
 	});
 	var Person = mongoose.model("Person", {
 		tag : String,
@@ -13,7 +13,9 @@ module.exports = function(mongoose){
 	});
 	
 	var File = mongoose.model("File", {
-		
+		tags : [String],
+		type : String,
+		url : String
 	});
 	
 	//[{ type: Schema.Types.ObjectId, ref: "User" }]
