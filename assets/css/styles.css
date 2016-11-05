@@ -1,0 +1,24 @@
+body {
+  padding-top: 70px;
+}
+
+.img-holder {
+  height: 300px;
+  /*overflow: hidden;
+  position: relative;*/
+}
+
+.img-holder img {
+  /*width: 100%;
+  min-height: 100%;
+  position: absolute;*/
+  object-fit: cover; /* Do not scale the image */
+  object-position: cent3er; /* Center the image within the element */
+  width: 100%;
+  height: 300px;
+}
+
+.nopadding {
+   padding: 0px !important;
+   margin: 0px !important;
+}

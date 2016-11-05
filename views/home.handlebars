@@ -1,1 +1,11 @@
-You're home, {{username}}!
+<div class="container-fluid">
+  <div class="row">
+    <div class="row">
+      {{#each imgs}}
+        <div class="col-md-4 col-sm-6 img-holder nopadding">
+          <img src="{{this}}">
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
