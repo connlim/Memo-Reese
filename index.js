@@ -220,6 +220,20 @@ app.get('/search', function(req, res){
 app.get('/uploads/:image', function(req, res){
 	res.sendFile(__dirname + "/assets/uploads" + req.params.image);
 });
+app.get('/image/:img', function(req, res){
+	File.findOne({name: req.params.img}, function (err, image) {
+		if (err) {
+			done(err);
+			return;
+		}
+		if (!image) {
+			done(null, false, { message: 'No such image.' });
+			return;
+		}
+		res.data.image = image
+	});
+	res.render('image', res.data);
+});
 app.listen(10201, function(){
 	console.log("Listening");
 });
