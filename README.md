@@ -1,1 +1,1 @@
-Social platform to connect workers/professors and students
+Image sharing site for youth with memory tagging features
