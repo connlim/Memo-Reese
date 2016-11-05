@@ -31,25 +31,26 @@
 		{{#if user}}
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-left">
-				<li id="page-home"><a href="/">Home</a></li>
+				<li id="page-home" class="active"><a href="/">Home</a></li>
 				<li id="page-upload"><a href="/upload">Upload</a></li>
-				<li id="page-contact"><a href="/contact">Contact</a></li>
 				<li>
 					<form class="navbar-form" action="/search" method="get">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search" name="searchterm">
-						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
-					</form>
+  					<!-- <div class="form-group">
+  						<input type="text" class="form-control" placeholder="Search" name="searchterm">
+  					</div>
+  					<button type="submit" class="btn btn-default">Submit</button> -->
+            <div class="form-group" style="display:inline;">
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                <input class="form-control" name="search" placeholder="Search" autocomplete="off" autofocus="autofocus" type="text">
+              </div>
+            </div>
+  				</form>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<!-- <li><a href="/logout">Logout</a></li> -->
-				<li>
-					<p class="navbar-btn">
-						<a href="/logout" class="btn btn-default">Logout</a>
-					</p>
-				</li>
+				<li><a href="/logout">Logout</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	  {{/if}}
