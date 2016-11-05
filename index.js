@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser')
 var mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost/orcas');
+mongoose.connect('mongodb://orcas:0c53d8885099@localhost/orcas');
 
 var models = require("./models")(mongoose);
 
