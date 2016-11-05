@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser');
 
 var shortid = require("shortid");
 var multer = require("multer");
-
 var storage = multer.diskStorage({
 	destination : function(req, file, cb){
 		cb(null, __dirname + "/assets/uploads");
@@ -129,14 +128,15 @@ app.get('/upload', function(req, res){
 	res.render('upload');
 });
 app.post('/upload', upload.single('uploader'), function(req, res){
-	var newfile = new File({
+	console.log(req.file);
+	/*var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
 		url : req.file.path
 	});
 	user.files.push(newfile);
 	user.save();
-	newfile.save();
+	newfile.save();*/
 });
 app.get('/search', function(req, res){
 	res.data.imgs = [];
