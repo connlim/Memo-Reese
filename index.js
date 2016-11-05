@@ -134,8 +134,8 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 		type : req.file.mimetype,
 		url : req.file.path
 	});
-	user.files.push(newfile);
-	user.save();
+	req.user.files.push(newfile);
+	req.user.save();
 	newfile.save();
 });
 app.get('/search', function(req, res){
