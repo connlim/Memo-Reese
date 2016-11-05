@@ -154,7 +154,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 		});
 	});*/
 	try {
-    new ExifImage({ image : newfile.url }, function (error, exifData) {
+    new ExifImage({ image : "assets" + newfile.url }, function (error, exifData) {
         if (error)
             console.log('Error: '+error.message);
         else{
