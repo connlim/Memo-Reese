@@ -32,6 +32,13 @@ body {
   display: block;
 }
 
+.img-full {
+  object-fit: cover;
+  object-position: center;
+  height: auto;
+  width: 100%;
+}
+
 .nopadding {
    padding: 0px !important;
    margin: 0px !important;
