@@ -223,7 +223,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 });
 app.get('/search', function(req, res){
 	res.data.imgs = [];
-	console.log(req.body.searchterms);
+	console.log(req.body);
 	var terms = req.body.searchterms.split(" ");
 	File.find({}, function(err, files){
 		for(var i = 0; i < files.length; i++){
