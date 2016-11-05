@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 
 var shortid = require("shortid");
 var multer = require("multer");
-var upload = multer();
+
 var storage = multer.diskStorage({
 	destination : function(req, file, cb){
 		cb(null, __dirname + "/assets/uploads");
@@ -17,6 +17,7 @@ var storage = multer.diskStorage({
 		cb(null, shortid.generate());
 	}
 });
+var upload = multer({storage : storage});
 
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
