@@ -228,7 +228,7 @@ app.get('/search', function(req, res){
 		for(var i = 0; i < files.length; i++){
 			for(var j = 0; j < terms.length; j++){
 				if(files[i].tags.indexOf(terms[j]) != -1){
-					res.data.imgs.push({url : files[i].url, type : files[i].type});
+					res.data.imgs.push(files[i]);
 					break;
 				}
 			}
