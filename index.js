@@ -22,13 +22,13 @@ var storage = multer.diskStorage({
 var upload = multer({storage : storage});
 
 var nodeGeocoder = require("node-geocoder");
-var geocoder-options = {
+var geocoderoptions = {
 	provider : 'google', 
 	httpAdapter: 'https', // Default 
 	apiKey: 'AIzaSyAS-MOn8Bz060XjhXHG5STlNXnQ9avp3Sg', // for Mapquest, OpenCage, Google Premier 
 	formatter: null
 };
-var geocoder = nodeGeocoder(geocoder-options);
+var geocoder = nodeGeocoder(geocoderoptions);
 
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
