@@ -39,15 +39,14 @@ body {
   padding-right: 30px;
   padding-top: 24px;
   padding-bottom: 24px;
+  position: relative;
 }
 .login-input input {
 	width: 100%;
 }
 .submitBox {
-	float: right;
-	width: 70%;
 	text-align: right;
-  padding-top: 10px;
+  padding-top: 20px;
 }
 .clearfix::after {
 	visibility: hidden;
@@ -56,4 +55,10 @@ body {
 	content: " ";
 	clear: both;
 	height: 0;
+}
+.login-register {
+  display: inline;
+  position: absolute;
+  bottom: 24px;
+  left: 30px;
 }
