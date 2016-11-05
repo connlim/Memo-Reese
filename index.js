@@ -44,6 +44,9 @@ app.use(app.session = session({
 app.use(passport.intialize());
 app.use(passport.session());
 
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+
 passport.use(new LocalStrategy(function (username, password, done) {
 	User.findOne({username: username}, function (err, user) {
 		if (err) {
@@ -115,9 +118,14 @@ app.post('/register', function(req, res){
 		user.save();
 		console.log(user);
 		res.redirect('/');
+	}else{
+		req.flash("error", "Passwords do not match!");
 	}
 });
-app.post('/imageupload', upload.single('uploader'), function(req, res){
+app.get('/upload', function(req, res){
+	res.render('upload');
+});
+app.post('/upload', upload.single('uploader'), function(req, res){
 	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
@@ -126,6 +134,21 @@ app.post('/imageupload', upload.single('uploader'), function(req, res){
 	user.files.push(newfile);
 	user.save();
 	newfile.save();
+});
+app.get('/search', function(req, res){
+	res.data.imgs = [];
+	var terms = req.body.searchterms.split(" ");
+	File.find({}, function(err, files){
+		for(var i = 0; i < files.length; i++){
+			for(var j = 0; j < terms.length; j++){
+				if(files[i].tags.indexOf(terms[j]) != -1){
+					res.data.imgs.push(files[i].url);
+					break;
+				}
+			}
+		}
+	});
+	res.render('home', res.data);
 });
 app.listen(10201, function(){
 	console.log("Listening");	
