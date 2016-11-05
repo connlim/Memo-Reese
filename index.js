@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 
 var shortid = require("shortid");
 var multer = require("multer");
+var upload = multer();
 var storage = multer.diskStorage({
 	destination : function(req, file, cb){
 		cb(null, __dirname + "/assets/uploads");
@@ -18,13 +19,14 @@ var storage = multer.diskStorage({
 });
 
 var session = require("express-session");
+var MongoStore = require("connect-mongo")(session);
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
-var passport-secret = "orcinus orca";
+var secret = "orcinus orca";
 
 var mongoose = require("mongoose");
 
-mongoose.connect('mongodb://orcas:0c53d8885099@localhost/orcas');
+mongoose.connect('mongodb://orcas:lunaisbestpony@localhost/orcas');
 
 var models = require("./models")(mongoose);
 
@@ -36,12 +38,12 @@ app.use(express.static(__dirname + '/assets'));
 
 app.use(cookieParser());
 app.use(app.session = session({
-	secret : passport-secret,
+	secret : secret,
 	store : new MongoStore({
 		mongooseConnection: mongoose.connection
 	})
 }));
-app.use(passport.intialize());
+app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(function (username, password, done) {
@@ -64,7 +66,7 @@ passport.use(new LocalStrategy(function (username, password, done) {
 passport.serializeUser(function (user, done){
 	done(null, user.id);
 });
-passport.deserialiseUser(function(id, done) {
+passport.deserializeUser(function(id, done) {
 	User.findOne({_id : id}, function(err, user){
 		if(user){
 			done(null, user);
