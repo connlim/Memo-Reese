@@ -157,8 +157,9 @@ app.post('/upload', upload.single('uploader'), function(req, res){
     new ExifImage({ image : newfile.url }, function (error, exifData) {
         if (error)
             console.log('Error: '+error.message);
-        else
-            console.log(exifData); // Do something with your data!
+        else{
+			console.log(exifData.gps);
+		}
     });
 	} catch (error) {
 	    console.log('Error: ' + error.message);
