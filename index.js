@@ -177,6 +177,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 						//console.log(res);
 						var datetime = new Date(exifData.exif.DateTimeOriginal);
 						Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
+							var newEvent;
 							if(!result){
 								var newEvent = new Event({
 									name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
@@ -187,16 +188,25 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 									},
 									datetime : exifData.exif.DateTimeOriginal
 								});
-								console.log(newEvent);
-								newEvent.save(function(err) {
-									if(err){
-										console.log(err);
-										throw err;
-									}
-									console.log("Event saved")
-								});
 								
+							}else{
+								if(result.datetime.split(" ")[0] != exifData.exif.DateTimeOriginal.split(" ")[0]){
+									var newEvent = new Event({
+										name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
+										location : {
+											textual : res[0].formattedAddress,
+											lat : lat,
+											lng : lng
+										},
+										datetime : exifData.exif.DateTimeOriginal
+									});
+								}else{
+									newEvent = result;
+								}
 							}
+							newEvent.save();
+							newfile.event = newEvent;
+							newfile.save();
 						});
 											
 					});
