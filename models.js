@@ -1,4 +1,4 @@
-modules.exports = function(mongoose){
+module.exports = function(mongoose){
 	var Schema = mongoose.Schema;
 	
 	var User = mongoose.model("User", {
