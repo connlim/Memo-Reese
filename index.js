@@ -91,7 +91,7 @@ app.use(function(req, res, next){
 app.get('/', function(req, res){
 	if(req.user){
 		res.data.imgs = [];
-		for(var i = 0; i < user.files.length; i++){
+		for(var i = 0; i < req.user.files.length; i++){
 			res.data.imgs.push(user.files[i].url);
 		}
 		res.render('home', res.data);
@@ -115,7 +115,7 @@ app.post('/register', function(req, res){
 		var user = new User({
 			username : req.body.username,
 			password : req.body.password,
-			description : req.body.description
+			description : ""
 		});
 		user.save();
 		console.log(user);
