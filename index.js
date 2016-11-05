@@ -33,6 +33,7 @@ app.post('/', function(req, res){
 		if(err || !user){
 			
 		}
+		console.log(user);
 		if(user.password == req.body.password){
 			res.data = {username : user.username, password : user.password};
 			res.render('/home', res.data);
