@@ -38,8 +38,8 @@ app.post('/', function(req, res){
 			res.render('/home', res.data);
 		}
 	});
-	res.flash('error', "Error logging in");
-	res.render('/', {errors : res.flash('error')});
+	req.flash('error', "Error logging in");
+	res.render('/', {errors : req.flash('error')});
 });
 app.listen(10201, function(){
 	console.log("Listening");	
