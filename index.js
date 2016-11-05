@@ -21,6 +21,15 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage : storage});
 
+var nodeGeocoder = require("node-geocoder");
+var geocoderoptions = {
+	provider : 'google', 
+	httpAdapter: 'https', // Default 
+	apiKey: 'AIzaSyAS-MOn8Bz060XjhXHG5STlNXnQ9avp3Sg', // for Mapquest, OpenCage, Google Premier 
+	formatter: null
+};
+var geocoder = nodeGeocoder(geocoderoptions);
+
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
 var passport = require("passport");
@@ -35,6 +44,7 @@ var models = require("./models")(mongoose);
 
 var User = models.User;
 var Person = models.Person;
+var Event = models.Event;
 var File = models.File;
 
 app.use(express.static(__dirname + '/assets'));
@@ -133,6 +143,7 @@ app.get('/upload', function(req, res){
 app.post('/upload', upload.single('uploader'), function(req, res){
 	//console.log(req.user.username);
 	var newfile = new File({
+		name : req.file.filename,
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
 		uploader : req.user.username,
@@ -154,13 +165,21 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 		});
 	});*/
 	try {
-    new ExifImage({ image : "assets" + newfile.url }, function (error, exifData) {
-        if (error)
-            console.log('Error: '+error.message);
-        else{
-			console.log(exifData.gps);
-		}
-    });
+		new ExifImage({ image : "assets" + newfile.url }, function (error, exifData) {
+			if (error)
+				console.log('Error: '+error.message);
+			else{
+				//console.log(exifData.gps);
+				if(exifData.gps){
+					var lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1] / 60 + exifData.gps.GPSLatitude[2] / 3600;
+					var lng = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1] / 60 + exifData.gps.GPSLongitude[2] / 3600;
+					geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
+						console.log(res);
+					});
+				}
+				
+			}
+		});
 	} catch (error) {
 	    console.log('Error: ' + error.message);
 	}
