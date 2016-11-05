@@ -131,7 +131,7 @@ app.get('/upload', function(req, res){
 	res.render('upload');
 });
 app.post('/upload', upload.single('uploader'), function(req, res){
-	//console.log(req.file);
+	console.log(req.user.username);
 	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
