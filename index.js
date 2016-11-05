@@ -7,6 +7,7 @@ var flash = require("connect-flash");
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 var exifParser = require('exif-parser')
+var ExifImage = require('exif').ExifImage;
 
 var shortid = require("shortid");
 var multer = require("multer");
@@ -97,7 +98,7 @@ app.get('/', function(req, res){
 			console.log(res.data.imgs);
 			res.render('home', res.data);
 		});
-		
+
 	}else{
 		res.render('login');
 	}
@@ -136,12 +137,11 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 		type : req.file.mimetype,
 		uploader : req.user.username,
 		url : "/uploads/" + req.file.filename
-		
 	});
 	//req.user.files.push(newfile);
 	//req.user.save();
 	newfile.save();
-	fs.open(newfile.url, 'r', function(status, fd) {
+	/*fs.open(newfile.url, 'r', function(status, fd) {
 		if (status) {
 		  //console.log(status.message);
 		  return;
@@ -152,7 +152,17 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 				parser.enableTagNames(true);
 				var result = parser.parse();
 		});
-	});
+	});*/
+	try {
+    new ExifImage({ image : newfile.url }, function (error, exifData) {
+        if (error)
+            console.log('Error: '+error.message);
+        else
+            console.log(exifData); // Do something with your data!
+    });
+	} catch (error) {
+	    console.log('Error: ' + error.message);
+	}
 	res.redirect('/');
 });
 app.get('/search', function(req, res){
