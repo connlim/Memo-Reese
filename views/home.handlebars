@@ -3,7 +3,7 @@
     <div class="row">
       {{#each imgs}}
         <div class="col-md-4 col-sm-6 img-holder nopadding">
-          <img src="{{this}}">
+          <img src="{{this.url}}" type="{{this.type}}">
         </div>
       {{/each}}
     </div>

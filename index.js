@@ -92,7 +92,7 @@ app.get('/', function(req, res){
 	if(req.user){
 		res.data.imgs = [];
 		for(var i = 0; i < req.user.files.length; i++){
-			res.data.imgs.push(req.user.files[i].url);
+			res.data.imgs.push({url : req.user.files[i].url, type : req.user.files[i].type});
 		}
 		res.render('home', res.data);
 	}else{
@@ -146,7 +146,7 @@ app.get('/search', function(req, res){
 		for(var i = 0; i < files.length; i++){
 			for(var j = 0; j < terms.length; j++){
 				if(files[i].tags.indexOf(terms[j]) != -1){
-					res.data.imgs.push(files[i].url);
+					res.data.imgs.push({url : files[i].url, type : files[i].type});
 					break;
 				}
 			}
