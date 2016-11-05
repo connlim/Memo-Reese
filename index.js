@@ -177,23 +177,22 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 						//console.log(res);
 						var datetime = new Date(exifData.exif.DateTimeOriginal);
 						Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
-							if(result){
-								if(datetime.toDateString() == result.datetime.toDateString()){
-								
+							if(!result){
+								if(!(datetime.toDateString() == result.datetime.toDateString())){
+									var newEvent = new Event({
+										name : datetime.toDateString() + "@" + res[0].formattedAddress,
+										location : {
+											textual : res[0].formattedAddress,
+											lat : lat,
+											lng : lng
+										},
+										datetime : datetime
+									});
+									newEvent.save();
 								}
 							}
 						});
-						var newEvent = new Event({
-							name : datetime.toDateString() + "@" + res[0].formattedAddress,
-							location : {
-								textual : res[0].formattedAddress,
-								lat : lat,
-								lng : lng
-							},
-							datetime : datetime
-						});
-						newEvent.save();
-						
+											
 					});
 				}
 				
