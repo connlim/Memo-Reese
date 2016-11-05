@@ -92,10 +92,11 @@ app.use(function(req, res, next){
 
 app.get('/', function(req, res){
 	if(req.user){
-		res.data.imgs = [];
-		for(var i = 0; i < req.user.files.length; i++){
+		res.data.imgs = req.user.files;
+		console.log(res.data.imgs);
+		/*for(var i = 0; i < req.user.files.length; i++){
 			res.data.imgs.push({url : req.user.files[i].url, type : req.user.files[i].type, tags: req.user.files[i].tags});
-		}
+		}*/
 		res.render('home', res.data);
 	}else{
 		res.render('login');
