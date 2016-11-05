@@ -174,7 +174,24 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 					var lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1] / 60 + exifData.gps.GPSLatitude[2] / 3600;
 					var lng = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1] / 60 + exifData.gps.GPSLongitude[2] / 3600;
 					geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
-						console.log(res);
+						//console.log(res);
+						var datetime = Date.parse(exifData.exif.DateTimeOriginal);
+						Event.findOne({location.textual : res[0].formattedAddress}, function(err, result){
+							if(datetime.toDateString() == result.datetime.toDateString()){
+								
+							}
+						});
+						var newEvent = new Event({
+							name : datetime.toDateString() + "@" + res[0].formattedAddress,
+							location : {
+								textual : res[0].formattedAddress,
+								lat : lat,
+								lng : lng
+							},
+							datetime : datetime
+						});
+						newEvent.save();
+						
 					});
 				}
 				
