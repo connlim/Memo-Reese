@@ -42,7 +42,7 @@ app.post('/', function(req, res){
 				}
 		});
 		//req.flash('error', "Error logging in");
-		res.render('login', {errors : "Error logging in"});*/
+		res.render('login', {errors : "Error logging in"});
 	}
 	
 });
