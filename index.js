@@ -170,7 +170,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 				console.log('Error: '+error.message);
 			else{
 				//console.log(exifData.gps);
-				if(exifData.gps){
+				if(exifData.gps.GPSLatitude && exifData.gps.GPSLongtitude){
 					var lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1] / 60 + exifData.gps.GPSLatitude[2] / 3600;
 					var lng = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1] / 60 + exifData.gps.GPSLongitude[2] / 3600;
 					geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
