@@ -32,6 +32,4 @@ app.post('/', function(req, res){
 		console.log(rows);
 	});
 });
-app.listen(10201, function(){
-	console.log("Listening");	
-});
+app.listen(10201);
