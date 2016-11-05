@@ -4,6 +4,9 @@
       {{#each imgs}}
         <div class="col-md-4 col-sm-6 img-holder nopadding">
           <img {{bind-attr src=this.url}} {bind-attr type=this.type}}>
+          <div class="img-tags">
+              {{this.tags}}
+          </div>
         </div>
       {{/each}}
     </div>

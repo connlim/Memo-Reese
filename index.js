@@ -94,7 +94,7 @@ app.get('/', function(req, res){
 	if(req.user){
 		res.data.imgs = [];
 		for(var i = 0; i < req.user.files.length; i++){
-			res.data.imgs.push({url : req.user.files[i].url, type : req.user.files[i].type});
+			res.data.imgs.push({url : req.user.files[i].url, type : req.user.files[i].type, tags: req.user.files[i].tags});
 		}
 		res.render('home', res.data);
 	}else{
@@ -149,8 +149,8 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 			var parser = exifParser.create(buffer);
 			parser.enableTagNames(true);
 			var result = parser.parse();
-  });
-});
+  	});
+	});
 	res.redirect('/');
 });
 app.get('/search', function(req, res){
