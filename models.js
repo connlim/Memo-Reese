@@ -19,7 +19,7 @@ module.exports = function(mongoose){
             lat: Number,
             lng: Number
         },
-		datetime: Date
+		datetime: String
 	});
 
 	var File = mongoose.model("File", {
