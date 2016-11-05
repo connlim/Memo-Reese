@@ -20,6 +20,32 @@
           {{image.event.location.textual}}
         </div>
       </div>
+      <button type="button" class="btn btn-primary pull-right" id="edit-btn" data-toggle="modal" data-target="#myModal">Edit</button>
+    </div>
+  </div>
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form action="/edit">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Image Properties</h4>
+          </div>
+          <div class="modal-body">
+            <p>Tags</p>
+            <input type="text" class="form-control" name="tags" value="{{image.tags}}"/>
+            <p style="padding-top: 20px;">Event Name</p>
+            <input type="text" class="form-control" name="event-name" value="{{image.event.name}}"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <input class="btn btn-success" type="submit" name="submit" data-dismiss="modal" value="Save" />
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
