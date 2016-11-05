@@ -236,7 +236,7 @@ app.get('/image/:img', function(req, res){
 		res.data.image = img;
 		res.render('image', res.data);
 	});
-	res.redirect('/');
+	res.render('/');
 });
 app.listen(10201, function(){
 	console.log("Listening");
