@@ -18,9 +18,9 @@ mongoose.connect('mongodb://localhost/orcas');
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-app.use(cookieParser('keyboard cat'));
-app.use(express.session({ cookie: { maxAge: 60000 }}));
-app.use(flash());
+//app.use(cookieParser('keyboard cat'));
+//app.use(express.session({ cookie: { maxAge: 60000 }}));
+//app.use(flash());
 
 app.engine('handlebars', expresshbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
@@ -42,8 +42,8 @@ app.post('/', function(req, res){
 			res.render('/home', res.data);
 		}
 	});
-	req.flash('error', "Error logging in");
-	res.render('/', {errors : req.flash('error')});
+	//req.flash('error', "Error logging in");
+	res.render('/', {errors : "Error logging in"});
 });
 app.listen(10201, function(){
 	console.log("Listening");	
