@@ -1,0 +1,23 @@
+{
+  "name": "konekti",
+  "version": "1.0.0",
+  "description": "Konekt jobbers and non-jobbers",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "jquery": "^3.1.1",
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@makerforce.io:222/shihern/Konekti.git"
+  },
+  "author": "Shi Hern",
+  "license": "ISC"
+}
