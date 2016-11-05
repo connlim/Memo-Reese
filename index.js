@@ -17,6 +17,8 @@ mongoose.connect('mongodb://localhost/orcas');
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+app.use(express.cookieParser('keyboard cat'));
+  app.use(express.session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
 app.engine('handlebars', expresshbs({defaultLayout : 'main'}));
