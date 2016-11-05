@@ -39,11 +39,11 @@ app.post('/', function(req, res){
 		console.log(user);
 		if(user.password == req.body.password){
 			res.data = {username : user.username, password : user.password};
-			res.render('/home', res.data);
+			res.render('home', res.data);
 		}
 	});
 	//req.flash('error', "Error logging in");
-	res.render('/', {errors : "Error logging in"});
+	res.render('login', {errors : "Error logging in"});
 });
 app.listen(10201, function(){
 	console.log("Listening");	
