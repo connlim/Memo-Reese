@@ -206,7 +206,9 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 							}
 							newEvent.save();
 							newfile.event = newEvent;
-							newfile.save();
+							newfile.save(function(err){
+								if(err) console.log(err);
+							});
 						});
 											
 					});
