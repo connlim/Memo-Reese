@@ -30,8 +30,7 @@ app.get('/', function(req, res){
 });
 app.post('/', function(req, res){
 	if(req.body){
-		User.findOne({username : req.body.username}).exec(function(err, user){
-			res.send(user);
+		User.findOne({username : "test"}).exec(function(err, user){
 			if(err || !user){
 				
 			}else{
