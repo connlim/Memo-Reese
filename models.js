@@ -11,8 +11,19 @@ module.exports = function(mongoose){
 		tag : String,
 
 	});
+	
+	var Event = mongoose.model("Event", {
+		name : String,
+		location: {
+            textual: {type: String, default: ""},
+            lat: Number,
+            lng: Number
+        },
+		datetime: String
+	});
 
 	var File = mongoose.model("File", {
+		name : String,
 		tags : [String],
 		type : String,
 		url : String,
@@ -24,6 +35,7 @@ module.exports = function(mongoose){
 	return {
 		User : User,
 		Person : Person,
+		Event : Event,
 		File : File
 	};
 }
