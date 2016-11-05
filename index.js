@@ -92,7 +92,7 @@ app.get('/', function(req, res){
 	if(req.user){
 		res.data.imgs = [];
 		for(var i = 0; i < req.user.files.length; i++){
-			res.data.imgs.push(user.files[i].url);
+			res.data.imgs.push(req.user.files[i].url);
 		}
 		res.render('home', res.data);
 	}else{
