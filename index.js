@@ -13,7 +13,11 @@ var User = models.User;
 var Person = models.Person;
 var File = models.File;
 
+
+mongoose.Promise = global.Promise;
+assert.equal(query.exec().constructor, global.Promise);
 mongoose.connect('mongodb://localhost/orcas');
+
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
