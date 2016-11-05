@@ -28,7 +28,7 @@ var secret = "orcinus orca";
 
 var mongoose = require("mongoose");
 
-mongoose.connect('mongodb://orcas:lunaisbestpony@localhost/orcas');
+mongoose.connect('mongodb://orcas:0c53d8885099@localhost/orcas');
 
 var models = require("./models")(mongoose);
 
