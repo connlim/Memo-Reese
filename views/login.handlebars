@@ -2,9 +2,28 @@
 	{{errors}}
 {{/if}}
 
-<h1>Login</h1>
-<form action="/" method="post">
-	Username: <input name="username" type="text"><br />
-	Password: <input name="password" type="password"><br />
-	<input type="submit" value="Submit">
-</form>	
+<div class="container">
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1 form-wrapper">
+				<form action="???">
+						<div class="login-label">
+							<span> Username </span>
+						</div>
+						<div class="login-input">
+							<input type="text" class="form-control" name="username"/>
+						</div>
+						<div class="clearfix"></div>
+						<div class="login-label" style="padding-top: 10px;">
+							<span> Password </span>
+						</div>
+						<div class="login-input">
+							<input type="password" class="form-control" name="password"/>
+						</div>
+						<div class="clearfix"></div>
+						<div class="submitBox">
+							<input class="btn btn-primary" type="submit" name="login" value="Sign in" />
+						</div>
+			 </form>
+			</div>
+		</div>
+	</div>
