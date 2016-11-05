@@ -128,15 +128,15 @@ app.get('/upload', function(req, res){
 	res.render('upload');
 });
 app.post('/upload', upload.single('uploader'), function(req, res){
-	console.log(req.file);
-	/*var newfile = new File({
+	//console.log(req.file);
+	var newfile = new File({
 		tags : req.body.tags.split(" "),
 		type : req.file.mimetype,
 		url : req.file.path
 	});
 	user.files.push(newfile);
 	user.save();
-	newfile.save();*/
+	newfile.save();
 });
 app.get('/search', function(req, res){
 	res.data.imgs = [];
