@@ -7,13 +7,15 @@ var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser')
 var mongoose = require("mongoose");
 
+mongoose.connect('mongodb://localhost/orcas');
+
 var models = require("./models")(mongoose);
 
 var User = models.User;
 var Person = models.Person;
 var File = models.File;
 
-mongoose.connect('mongodb://localhost/orcas');
+
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
@@ -63,7 +65,7 @@ app.post('/create', function(req, res){
 			description : ""
 		});
 		user.save();
-		res.redirect('login');
+		res.redirect('/');
 	}
 });
 app.listen(10201, function(){
