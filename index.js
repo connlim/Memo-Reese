@@ -137,6 +137,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 	req.user.files.push(newfile);
 	req.user.save();
 	newfile.save();
+	res.redirect('/');
 });
 app.get('/search', function(req, res){
 	res.data.imgs = [];
