@@ -275,8 +275,8 @@ app.post('/edit', function(req, res) {
 		res.redirect('back');
 	})
 });
-app.get("/events/:event", function(req, res){
-	File.find({"event.id" : req.params.event}).populate("event").exec(function(err, files){
+app.get("/events/:eventid", function(req, res){
+	File.find({"event.id" : req.params.eventid}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
 		console.log(files);
 		res.render('home', res.data);
