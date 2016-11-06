@@ -278,7 +278,7 @@ app.get("/events/:event", function(req, res){
 		res.data.imgs = files;
 	});
 	res.render('/', res.data);
-}
+});
 app.listen(10201, function(){
 	console.log("Listening");
 });
