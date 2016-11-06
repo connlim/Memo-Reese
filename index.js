@@ -41,11 +41,14 @@ var mongoose = require("mongoose");
 mongoose.connect('mongodb://orcas:0c53d8885099@localhost/orcas');
 
 var models = require("./models")(mongoose);
+var api = require("./api")(mongoose, models);
 
 var User = models.User;
 var Person = models.Person;
 var Event = models.Event;
 var File = models.File;
+
+app.use("/api", api);
 
 app.use(express.static(__dirname + '/assets'));
 
