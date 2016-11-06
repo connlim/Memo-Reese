@@ -240,7 +240,7 @@ app.get('/uploads/:image', function(req, res){
 	res.sendFile(__dirname + "/assets/uploads" + req.params.image);
 });
 app.get('/image/:img', function(req, res){
-	File.findOne({name: req.params.img}, function (err, img) {
+	File.findOne({name: req.params.img}.populate('event'function (err, img) {
 		if (err) {
 			done(err);
 			return;
