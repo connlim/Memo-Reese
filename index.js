@@ -277,7 +277,7 @@ app.get("/events/:event", function(req, res){
 	File.find({"event._id" : req.params.event}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
 	});
-	res.render('/', res.data);
+	res.render('home', res.data);
 });
 app.listen(10201, function(){
 	console.log("Listening");
