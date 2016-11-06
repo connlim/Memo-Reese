@@ -230,7 +230,7 @@ app.get('/search', function(req, res){
 	File.find({}, function(err, files){
 		for(var i = 0; i < files.length; i++){
 			for(var j = 0; j < terms.length; j++){
-				if(files[i].tags.indexOf(terms[j]) != -1){
+				if(files[i].tags.indexOf(terms[j].toLowerCase()) != -1){
 					res.data.imgs.push(files[i]);
 					break;
 				}
@@ -269,9 +269,9 @@ app.post('/edit', function(req, res) {
 			done(null, false, {message: 'No such image. '});
 			return;
 		}
-		
+
 		img.tags = req.body.tags.split(" ");
-		
+
 		img.save(function(err) {
 			if(err) console.log(err);
 		});
@@ -279,7 +279,7 @@ app.post('/edit', function(req, res) {
 			img.event.name = req.body.eventname;
 			img.event.save();
 		}
-		
+
 		res.redirect('back');
 	})
 });
