@@ -260,6 +260,7 @@ app.get('/image/:img', function(req, res){
 });
 app.post('/edit', function(req, res) {
 	File.findOne({name: req.body.imagename}).populate('event').exec(function(err, img) {
+		console.log(img);
 		if(err) {
 			done(err);
 			return;
@@ -268,6 +269,7 @@ app.post('/edit', function(req, res) {
 			done(null, false, {message: 'No such image. '});
 			return;
 		}
+		
 		img.tags = req.body.tags.split(" ");
 		img.event.name = req.body.eventname;
 		img.save(function(err) {
