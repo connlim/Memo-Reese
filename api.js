@@ -13,7 +13,7 @@ module.exports = function (mongoose, models){
 					res.status(200).send(user);
 				}
 			}
-		}
+		});
 		res.status(200).send(false);
 	});
 	api.get('/images', function(req, res){
