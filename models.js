@@ -14,6 +14,7 @@ module.exports = function(mongoose){
 	
 	var Event = mongoose.model("Event", {
 		name : String,
+		id : String,
 		location: {
             textual: {type: String, default: ""},
             lat: Number,

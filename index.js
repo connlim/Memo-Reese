@@ -171,6 +171,7 @@ app.post('/upload', upload.array('uploader'), function(req, res){
 								if(!result){
 									var newEvent = new Event({
 										name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
+										id : shortid.generate(),
 										location : {
 											textual : res[0].formattedAddress,
 											lat : lat,
@@ -183,6 +184,7 @@ app.post('/upload', upload.array('uploader'), function(req, res){
 									if(result.datetime.split(" ")[0] != exifData.exif.DateTimeOriginal.split(" ")[0]){
 										var newEvent = new Event({
 											name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
+											id : shortid.generate(),
 											location : {
 												textual : res[0].formattedAddress,
 												lat : lat,
@@ -274,7 +276,7 @@ app.post('/edit', function(req, res) {
 	})
 });
 app.get("/events/:event", function(req, res){
-	File.find({"event._id" : req.params.event}).populate("event").exec(function(err, files){
+	File.find({event.id : req.params.event}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
 		console.log(files);
 		res.render('home', res.data);
