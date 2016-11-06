@@ -148,7 +148,7 @@ app.post('/upload', upload.array('uploader'), function(req, res){
 	req.files.forEach(function(file){
 		var newfile = new File({
 			name : file.filename,
-			tags : req.body.tags.split(" "),
+			tags : req.body.tags.split(/[,\s]\s*/),
 			type : file.mimetype,
 			uploader : req.user.username,
 			url : "/uploads/" + file.filename
@@ -210,12 +210,12 @@ app.post('/upload', upload.array('uploader'), function(req, res){
 			console.log('Error: ' + error.message);
 		}
 	});
-	
+
 	res.redirect('/');
 });
 app.get('/search', function(req, res){
 	res.data.imgs = [];
-	var terms = req.query.searchterms.split(" ");
+	var terms = req.query.searchterms.split(/[,\s]\s*/);
 	File.find({}, function(err, files){
 		for(var i = 0; i < files.length; i++){
 			for(var j = 0; j < terms.length; j++){
@@ -259,7 +259,7 @@ app.post('/edit', function(req, res) {
 			return;
 		}
 
-		img.tags = req.body.tags.split(" ");
+		img.tags = req.body.tags.split(/[,\s]\s*/);
 
 		img.save(function(err) {
 			if(err) console.log(err);
