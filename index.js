@@ -239,10 +239,11 @@ app.get('/image/:img', function(req, res){
 		if(!err && img){
 			//console.log(img);
 			res.data.image = img;
-			res.data.image.tags = img.tags.join(", ");
+			//res.data.image.tags = img.tags.join(", ");
+			res.data.image.tags = img.tags;
 			res.render('image', res.data);
 		}
-		
+
 	});
 	//res.render('/');
 });
