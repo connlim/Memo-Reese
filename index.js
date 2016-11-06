@@ -240,7 +240,7 @@ app.get('/uploads/:image', function(req, res){
 	res.sendFile(__dirname + "/assets/uploads" + req.params.image);
 });
 app.get('/image/:img', function(req, res){
-	File.findOne({name: req.params.img}.populate('event'function (err, img) {
+	File.findOne({name: req.params.img}).populate('event').exec(function (err, img) {
 		if (err) {
 			done(err);
 			return;
@@ -256,7 +256,7 @@ app.get('/image/:img', function(req, res){
 	//res.render('/');
 });
 app.post('/edit', function(req, res) {
-	File.findOne({name: req.body.imagename}, function(err, img) {
+	File.findOne({name: req.body.imagename}).populate('event').exec(function(err, img) {
 		if(err) {
 			done(err);
 			return;
