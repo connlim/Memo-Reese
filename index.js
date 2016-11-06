@@ -103,7 +103,7 @@ app.use(function(req, res, next){
 
 app.get('/', function(req, res){
 	if(req.user){
-		File.find({}, function(err, files){
+		File.find({}).populate('event').exec(function(err, files){
 			res.data.imgs = files;
 			//console.log(res.data.imgs);
 			res.render('home', res.data);
@@ -169,12 +169,12 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 			if (error)
 				console.log('Error: '+error.message);
 			else{
-				//console.log(exifData.gps);
-				if(exifData.gps.GPSLatitude && exifData.gps.GPSLongtitude){
+				console.log(exifData.gps);
+				if(exifData.gps.GPSLatitude && exifData.gps.GPSLongitude){
 					var lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1] / 60 + exifData.gps.GPSLatitude[2] / 3600;
 					var lng = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1] / 60 + exifData.gps.GPSLongitude[2] / 3600;
 					geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
-						//console.log(res);
+						console.log(res);
 						var datetime = new Date(exifData.exif.DateTimeOriginal);
 						Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
 							var newEvent;

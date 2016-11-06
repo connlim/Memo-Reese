@@ -44,6 +44,9 @@ body {
   border-radius: 3px;
   color: white;
   display: block;
+  max-width:50%;
+  white-space : nowrap;
+  overflow : hidden;
 }
 
 .img-full {
