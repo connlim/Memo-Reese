@@ -23,9 +23,9 @@ var upload = multer({storage : storage});
 
 var nodeGeocoder = require("node-geocoder");
 var geocoderoptions = {
-	provider : 'google', 
-	httpAdapter: 'https', // Default 
-	apiKey: 'AIzaSyAS-MOn8Bz060XjhXHG5STlNXnQ9avp3Sg', // for Mapquest, OpenCage, Google Premier 
+	provider : 'google',
+	httpAdapter: 'https', // Default
+	apiKey: 'AIzaSyAS-MOn8Bz060XjhXHG5STlNXnQ9avp3Sg', // for Mapquest, OpenCage, Google Premier
 	formatter: null
 };
 var geocoder = nodeGeocoder(geocoderoptions);
@@ -188,7 +188,7 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 									},
 									datetime : exifData.exif.DateTimeOriginal
 								});
-								
+
 							}else{
 								if(result.datetime.split(" ")[0] != exifData.exif.DateTimeOriginal.split(" ")[0]){
 									var newEvent = new Event({
@@ -210,10 +210,10 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 								if(err) console.log(err);
 							});
 						});
-											
+
 					});
 				}
-				
+
 			}
 		});
 	} catch (error) {
@@ -255,6 +255,23 @@ app.get('/image/:img', function(req, res){
 	});
 	//res.render('/');
 });
+app.post('/edit', function(req, res) {
+	File.findOne({name: req.body.imagename}, function(err, img) {
+		if(err) {
+			done(err);
+			return;
+		}
+		if(!img) {
+			done(null, false, {message: 'No such image. '});
+			return;
+		}
+		img.tags = req.body.tags.split(" ");
+		img.event.name = req.body.eventname;
+		img.save();
+		img.event.save();
+		res.redirect('back');
+	})
+})
 app.listen(10201, function(){
 	console.log("Listening");
 });
