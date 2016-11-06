@@ -270,7 +270,9 @@ app.post('/edit', function(req, res) {
 		}
 		img.tags = req.body.tags.split(" ");
 		img.event.name = req.body.eventname;
-		img.save();
+		img.save(function(err) {
+			if(err) console.log(err);
+		});
 		img.event.save();
 		res.redirect('back');
 	})
