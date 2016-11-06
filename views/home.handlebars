@@ -8,9 +8,11 @@
             {{this.uploader}}
           </div>
           {{#if this.event.name}}
-          <div class="img-tag-left">
-            {{this.event.name}}
-          </div>
+		    <a href="/events/{{this.event.id}}">
+			  <div class="img-tag-left">
+				{{this.event.name}}
+			  </div>
+			</a>
           {{/if}}
         </div>
       </a>

@@ -273,6 +273,12 @@ app.post('/edit', function(req, res) {
 		res.redirect('back');
 	})
 });
+app.get("/events/:event", function(req, res){
+	File.find({event.id : event}).populate("event").exec(function(err, files){
+		res.data.imgs = files;
+	});
+	res.render('/', res.data);
+}
 app.listen(10201, function(){
 	console.log("Listening");
 });
