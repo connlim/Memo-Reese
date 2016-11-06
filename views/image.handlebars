@@ -10,12 +10,18 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">Tags</div>
-        <div class="panel-body">{{image.tags}}</div>
+        <div class="panel-body">
+        {{#each image.tags}}
+          <a href="/search?searchterms={{this}}">{{this}}</a> 
+        {{/each}}
+        </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">Event</div>
         <div class="panel-body">
-          {{image.event.name}}
+          <a href="/events/{{image.event.id}}">
+            {{image.event.name}}
+          </a>
           <br />
           {{image.event.datetime}}
           <br />
