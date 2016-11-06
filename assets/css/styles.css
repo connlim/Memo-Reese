@@ -82,6 +82,7 @@ body {
   padding-right: 30px;
   padding-top: 24px;
   padding-bottom: 24px;
+  margin-top: 20px;
   position: relative;
 }
 .login-input input {
