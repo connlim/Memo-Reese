@@ -7,9 +7,11 @@
           <div class="img-tag-right">
             {{this.uploader}}
           </div>
+          {{#if this.event.name}}
           <div class="img-tag-left">
             {{this.event.name}}
           </div>
+          {{/if}}
         </div>
       </a>
       {{/each}}
