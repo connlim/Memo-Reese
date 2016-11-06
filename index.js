@@ -230,9 +230,11 @@ app.get('/search', function(req, res){
 	File.find({}, function(err, files){
 		for(var i = 0; i < files.length; i++){
 			for(var j = 0; j < terms.length; j++){
-				if(files[i].tags.indexOf(terms[j].toLowerCase()) != -1){
-					res.data.imgs.push(files[i]);
-					break;
+				for(tag in files[i].tags) {
+					if(tag.toLowerCase() == terms[j].toLowerCase()) {
+						res.data.imgs.push(files[i]);
+						break;
+					}
 				}
 			}
 		}
