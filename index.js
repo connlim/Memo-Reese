@@ -243,6 +243,7 @@ app.get('/image/:img', function(req, res){
 		}
 		//console.log(img);
 		res.data.image = img;
+		res.data.image.tags = img.tags.join(", ");
 		res.render('image', res.data);
 	});
 	//res.render('/');
