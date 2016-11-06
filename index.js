@@ -249,7 +249,7 @@ app.get('/image/:img', function(req, res){
 			done(null, false, { message: 'No such image.' });
 			return;
 		}
-		console.log(img);
+		//console.log(img);
 		res.data.image = img;
 		res.render('image', res.data);
 	});
