@@ -274,7 +274,7 @@ app.post('/edit', function(req, res) {
 	})
 });
 app.get("/events/:event", function(req, res){
-	File.find({event.id : event}).populate("event").exec(function(err, files){
+	File.find({event._id : req.params.event}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
 	});
 	res.render('/', res.data);
