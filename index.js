@@ -265,13 +265,18 @@ app.post('/edit', function(req, res) {
 	})
 });
 app.get("/events/:eventid", function(req, res){
-	File.find({eventid : req.params.eventid}).populate("event").exec(function(err, files){
+	File.find({}, function(err, files){
+		files.forEach(function(file){
+			console.log(file.eventid == req.params.eventid);
+		}
+	});
+	/*File.find({eventid : req.params.eventid}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
 		console.log(err);
 		console.log(files);
 		res.render('home', res.data);
-	});
-	
+	});*/
+	res.render('home', res.data);
 });
 app.listen(10201, function(){
 	console.log("Listening");
