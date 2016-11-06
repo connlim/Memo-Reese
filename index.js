@@ -143,57 +143,32 @@ app.post('/register', function(req, res){
 app.get('/upload', function(req, res){
 	res.render('upload');
 });
-app.post('/upload', upload.single('uploader'), function(req, res){
+app.post('/upload', upload.array('uploader'), function(req, res){
 	//console.log(req.user.username);
-	var newfile = new File({
-		name : req.file.filename,
-		tags : req.body.tags.split(" "),
-		type : req.file.mimetype,
-		uploader : req.user.username,
-		url : "/uploads/" + req.file.filename
-	});
-	//req.user.files.push(newfile);
-	//req.user.save();
-	newfile.save();
-	/*fs.open(newfile.url, 'r', function(status, fd) {
-		if (status) {
-		  //console.log(status.message);
-		  return;
-		}
-		var buffer = new Buffer(65535);
-		fs.read(fd, buffer, 0, 65535, 0, function(err, num) {
-				var parser = exifParser.create(buffer);
-				parser.enableTagNames(true);
-				var result = parser.parse();
+	req.files.forEach(function(file){
+		var newfile = new File({
+			name : file.filename,
+			tags : req.body.tags.split(" "),
+			type : file.mimetype,
+			uploader : req.user.username,
+			url : "/uploads/" + file.filename
 		});
-	});*/
-	try {
-		new ExifImage({ image : "assets" + newfile.url }, function (error, exifData) {
-			if (error)
-				console.log('Error: '+error.message);
-			else{
-				console.log(exifData.gps);
-				if(exifData.gps.GPSLatitude && exifData.gps.GPSLongitude){
-					var lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1] / 60 + exifData.gps.GPSLatitude[2] / 3600;
-					var lng = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1] / 60 + exifData.gps.GPSLongitude[2] / 3600;
-					geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
-						console.log(res);
-						var datetime = new Date(exifData.exif.DateTimeOriginal);
-						Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
-							var newEvent;
-							if(!result){
-								var newEvent = new Event({
-									name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
-									location : {
-										textual : res[0].formattedAddress,
-										lat : lat,
-										lng : lng
-									},
-									datetime : exifData.exif.DateTimeOriginal
-								});
-
-							}else{
-								if(result.datetime.split(" ")[0] != exifData.exif.DateTimeOriginal.split(" ")[0]){
+		newfile.save();
+		try {
+			new ExifImage({ image : "assets" + newfile.url }, function (error, exifData) {
+				if (error)
+					console.log('Error: '+error.message);
+				else{
+					console.log(exifData.gps);
+					if(exifData.gps.GPSLatitude && exifData.gps.GPSLongitude){
+						var lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1] / 60 + exifData.gps.GPSLatitude[2] / 3600;
+						var lng = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1] / 60 + exifData.gps.GPSLongitude[2] / 3600;
+						geocoder.reverse({lat:lat, lon:lng}, function(err, res) {
+							console.log(res);
+							var datetime = new Date(exifData.exif.DateTimeOriginal);
+							Event.findOne({"location.textual" : res[0].formattedAddress}, function(err, result){
+								var newEvent;
+								if(!result){
 									var newEvent = new Event({
 										name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
 										location : {
@@ -203,25 +178,39 @@ app.post('/upload', upload.single('uploader'), function(req, res){
 										},
 										datetime : exifData.exif.DateTimeOriginal
 									});
+
 								}else{
-									newEvent = result;
+									if(result.datetime.split(" ")[0] != exifData.exif.DateTimeOriginal.split(" ")[0]){
+										var newEvent = new Event({
+											name : exifData.exif.DateTimeOriginal + "@" + res[0].formattedAddress,
+											location : {
+												textual : res[0].formattedAddress,
+												lat : lat,
+												lng : lng
+											},
+											datetime : exifData.exif.DateTimeOriginal
+										});
+									}else{
+										newEvent = result;
+									}
 								}
-							}
-							newEvent.save();
-							newfile.event = newEvent;
-							newfile.save(function(err){
-								if(err) console.log(err);
+								newEvent.save();
+								newfile.event = newEvent;
+								newfile.save(function(err){
+									if(err) console.log(err);
+								});
 							});
+
 						});
+					}
 
-					});
 				}
-
-			}
-		});
-	} catch (error) {
-	    console.log('Error: ' + error.message);
-	}
+			});
+		} catch (error) {
+			console.log('Error: ' + error.message);
+		}
+	});
+	
 	res.redirect('/');
 });
 app.get('/search', function(req, res){
