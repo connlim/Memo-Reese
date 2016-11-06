@@ -278,7 +278,7 @@ app.post('/edit', function(req, res) {
 		img.event.save();
 		res.redirect('back');
 	})
-})
+});
 app.listen(10201, function(){
 	console.log("Listening");
 });
