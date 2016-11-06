@@ -276,8 +276,10 @@ app.post('/edit', function(req, res) {
 app.get("/events/:event", function(req, res){
 	File.find({"event._id" : req.params.event}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
+		console.log(files);
+		res.render('home', res.data);
 	});
-	res.render('home', res.data);
+	
 });
 app.listen(10201, function(){
 	console.log("Listening");
