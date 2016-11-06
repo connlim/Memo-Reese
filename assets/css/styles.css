@@ -1,6 +1,10 @@
 body {
   padding-top: 50px;
 }
+#img-nav {
+  height: 50px;
+  width: auto;
+}
 
 .img-holder {
   height: 300px;
