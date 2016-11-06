@@ -103,7 +103,7 @@ app.use(function(req, res, next){
 
 app.get('/', function(req, res){
 	if(req.user){
-		File.find({}, function(err, files){
+		File.find({}).populate('event').exec(function(err, files){
 			res.data.imgs = files;
 			//console.log(res.data.imgs);
 			res.render('home', res.data);
