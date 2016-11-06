@@ -37,9 +37,10 @@
             <p>Tags</p>
             <input type="text" class="form-control" name="tags" value="{{image.tags}}"/>
             <p style="padding-top: 20px;">Event Name</p>
-            <input type="text" class="form-control" name="event-name" value="{{image.event.name}}"/>
+            <input type="text" class="form-control" name="eventname" value="{{image.event.name}}"/>
           </div>
           <div class="modal-footer">
+            <input style="display: none" name="imagename" value="{{image.name}}"/>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             <input class="btn btn-success" type="submit" name="submit" data-dismiss="modal" value="Save" />
           </div>
