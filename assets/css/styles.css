@@ -4,6 +4,7 @@ body {
 #img-nav {
   height: 50px;
   width: auto;
+  padding-right: 10px;
 }
 
 .img-holder {
