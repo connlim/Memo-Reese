@@ -4,9 +4,14 @@
       <a href="/image/{{this.name}}">
         <div class="col-md-4 col-sm-6 img-holder nopadding">
           <img src="{{this.url}}" type="{{this.type}}">
-          <div class="img-tags">
-              {{this.uploader}}
+          <div class="img-tag-right">
+            {{this.uploader}}
           </div>
+          {{#if this.event.name}}
+          <div class="img-tag-left">
+            {{this.event.name}}
+          </div>
+          {{/if}}
         </div>
       </a>
       {{/each}}
