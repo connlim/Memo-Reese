@@ -44,6 +44,7 @@ body {
   border-radius: 3px;
   color: white;
   display: block;
+  max-width:25%;
 }
 
 .img-full {
