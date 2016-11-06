@@ -230,11 +230,17 @@ app.get('/search', function(req, res){
 	File.find({}, function(err, files){
 		for(var i = 0; i < files.length; i++){
 			for(var j = 0; j < terms.length; j++){
+<<<<<<< HEAD
 				for(tag in files[i].tags) {
 					if(tag.toLowerCase() == terms[j].toLowerCase()) {
 						res.data.imgs.push(files[i]);
 						break;
 					}
+=======
+				if(files[i].tags.indexOf(terms[j]) != -1){
+					res.data.imgs.push(files[i]);
+					break;
+>>>>>>> parent of 6ac3bdd... Ignore caps when searching
 				}
 			}
 		}
@@ -271,9 +277,9 @@ app.post('/edit', function(req, res) {
 			done(null, false, {message: 'No such image. '});
 			return;
 		}
-
+		
 		img.tags = req.body.tags.split(" ");
-
+		
 		img.save(function(err) {
 			if(err) console.log(err);
 		});
@@ -281,7 +287,7 @@ app.post('/edit', function(req, res) {
 			img.event.name = req.body.eventname;
 			img.event.save();
 		}
-
+		
 		res.redirect('back');
 	})
 });
