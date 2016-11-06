@@ -198,6 +198,7 @@ app.post('/upload', upload.array('uploader'), function(req, res){
 								}
 								newEvent.save();
 								newfile.event = newEvent;
+								newfile.eventid = newEvent.eventid;
 								newfile.save(function(err){
 									if(err) console.log(err);
 								});
@@ -235,48 +236,36 @@ app.get('/uploads/:image', function(req, res){
 });
 app.get('/image/:img', function(req, res){
 	File.findOne({name: req.params.img}).populate('event').exec(function (err, img) {
-		if (err) {
-			done(err);
-			return;
+		if(!err && img){
+			//console.log(img);
+			res.data.image = img;
+			res.data.image.tags = img.tags.join(", ");
+			res.render('image', res.data);
 		}
-		if (!img) {
-			done(null, false, { message: 'No such image.' });
-			return;
-		}
-		//console.log(img);
-		res.data.image = img;
-		res.data.image.tags = img.tags.join(", ");
-		res.render('image', res.data);
+		
 	});
 	//res.render('/');
 });
 app.post('/edit', function(req, res) {
 	File.findOne({name: req.body.imagename}).populate('event').exec(function(err, img) {
 		console.log(img);
-		if(err) {
-			done(err);
-			return;
-		}
-		if(!img) {
-			done(null, false, {message: 'No such image. '});
-			return;
-		}
+		if(!err && img){
 
-		img.tags = req.body.tags.split(/[,\s]\s*/);
+			img.tags = req.body.tags.split(/[,\s]\s*/);
 
-		img.save(function(err) {
-			if(err) console.log(err);
-		});
-		if(img.event){
-			img.event.name = req.body.eventname;
-			img.event.save();
+			img.save(function(err) {
+				if(err) console.log(err);
+			});
+			if(img.event){
+				img.event.name = req.body.eventname;
+				img.event.save();
+			}
 		}
-
 		res.redirect('back');
 	})
 });
 app.get("/events/:eventid", function(req, res){
-	File.find({"event.id" : req.params.eventid}).populate("event").exec(function(err, files){
+	File.find({eventid : req.params.eventid}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
 		console.log(files);
 		res.render('home', res.data);

@@ -29,6 +29,7 @@ module.exports = function(mongoose){
 		type : String,
 		url : String,
 		uploader : String,
+		eventid : String,
 		event : { type: Schema.Types.ObjectId, ref: "Event", default: null}
 	});
 
