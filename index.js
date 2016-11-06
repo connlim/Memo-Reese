@@ -268,7 +268,7 @@ app.get("/events/:eventid", function(req, res){
 	File.find({}, function(err, files){
 		files.forEach(function(file){
 			console.log(file.eventid == req.params.eventid);
-		}
+		});
 	});
 	/*File.find({eventid : req.params.eventid}).populate("event").exec(function(err, files){
 		res.data.imgs = files;
