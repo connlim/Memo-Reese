@@ -17,7 +17,7 @@ module.exports = function (mongoose, models){
 		res.status(200).send(false);
 	});
 	api.get('/images', function(req, res){
-		File.file({}).populate('event').exec(function(err, files){
+		File.find({}).populate('event').exec(function(err, files){
 			res.status(200).send(files);
 		});
 	});
